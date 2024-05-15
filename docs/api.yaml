@@ -1,0 +1,45 @@
+openapi: 3.1.0
+info:
+  title: 'vodeno-task'
+  version: '1.0'
+  description: Interview task
+  summary: Interview task
+paths:
+  '/api/messages':
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerMessage'
+      summary: Creates a customer message
+      operationId: post-customer-message
+      responses:
+        '204':
+          description: Ok. Nothing to return.
+        '423':
+          description: Operation locked, try again later.
+        '400':
+          description: Validation error.
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    CreateCustomerMessage:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        title:
+          type: string
+        content:
+          type: string
+        mailing_id:
+          type: integer
+        insertion_time:
+          type: string
+          format: datetime
+          description: RFC3339 compliant datetime.
